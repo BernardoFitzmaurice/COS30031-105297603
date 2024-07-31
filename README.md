@@ -5,7 +5,7 @@ The base repository for Games Programming @ Swinburne University. Students are e
 
 ## Who Am I?
 
-TODO: Add your name, student id, and easy email link here, formatted as a unordered list.
+Name: Bernardo Fitzmaurice Acevedo. Student ID:105297603. email: 105297603@student.swin.edu.au
 
 ## Purpose
 
