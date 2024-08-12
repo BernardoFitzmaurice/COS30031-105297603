@@ -44,7 +44,7 @@ Updates
 
 *******************************************************************************/
 
-#define SECTION1 false;
+#define SECTION1 true;
 #define SECTION2 false;
 #define SECTION3 false;
 #define SECTION4 false;
@@ -86,7 +86,7 @@ int main()
 #if SECTION1
 	//Warm up. Create a particle, set values, show to screen
 	cout << " << Section 1 >>" << endl;
-	Particle a;
+	Particle a = Particle();
 	// ##Q.5	un-initialised values ... what prints and why? 
 	// NOTE: your IDE might be giving you a warning or error - if so note that in your answer (and fix).
 	cout << "Q.5: a with uninitialised values ... ";
