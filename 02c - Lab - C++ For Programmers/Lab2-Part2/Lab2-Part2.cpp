@@ -44,13 +44,13 @@ Updates
 
 *******************************************************************************/
 
-#define SECTION1 true;
+#define SECTION1 false;
 #define SECTION2 false;
 #define SECTION3 false;
 #define SECTION4 false;
 #define SECTION5 false;
 #define SECTION6 false;
-#define SECTION7 false;
+#define SECTION7 true;
 
 #include <iostream>
 
@@ -215,7 +215,7 @@ int main()
 	// ##Q.23	Change the size argument to 10 (or similar). What happens?
 	// ##Q23.1	You might see some values that we set earlier. Why would this happen?
 	cout << "Q.23: Array position overrun ... " << endl;
-	showParticleArray(p_array2, 3); // <-- change size from 3 to 10
+	showParticleArray(p_array2, 10); // <-- change size from 3 to 10
 #endif
 
 #if SECTION6
