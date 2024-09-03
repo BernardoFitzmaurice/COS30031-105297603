@@ -224,6 +224,7 @@ int main()
 	cout << "Q.24: Warm up concept checks ... " << endl;
 	// ##Q24	Points to nothing - does it?
 	Particle* p1_ptr; 
+	p1_ptr = new Particle();
 	cout << " - pointer address (does it?): " << hex << p1_ptr << endl;
 	Particle p1 = { 9,9,9 }; // a real and initialised Particle variable
 	cout << " - pointer address of p1:" << hex << &p1 << endl;
@@ -244,12 +245,18 @@ int main()
 	showParticle((*p1_ptr));
 	// Clean up!
 	delete p1_ptr;
+	p1_ptr = nullptr;
 	// ##Q.27	What is delete and what did it do?
 
 	cout << "Q.28 Can we still show value at pointer address? (It was deleted, so ...) " << endl;
 	cout << " - pointer address " << hex << p1_ptr << endl;
 	// ##Q.28	What happens when we try this? Explain.
-	showParticle((*p1_ptr));
+	if (p1_ptr != nullptr) {
+		showParticle((*p1_ptr));
+	}
+	else {
+		cout << "Pointer is null, cannot dereference F in the chat" << endl;
+	}
 
 	cout << "Q.29 nullptr vs NULL vs 0 ... for pointers." << endl;
 	// house keeping - if a pointer isn't valid, set it to nullptr/NULL
@@ -259,7 +266,13 @@ int main()
 	// ##Q.29	What is the difference between NULL and nullptr and 0?
 
 	// ##Q.30	What happens in this line? (A zero address now, so ...)
-	showParticle((*p1_ptr));
+	if (p1_ptr != nullptr) {
+		showParticle((*p1_ptr));
+	}
+	else {
+		cout << "Pointer is null, cannot dereference F in the chat" << endl;
+	}
+
 	// NOTE: There is a difference between "run" and "debug" in most IDEs
 	// NOTE: If you do a simple run (not a debug) with the IDE, you should
 	// normally get a "process finished with exit code 0" message at the end.
