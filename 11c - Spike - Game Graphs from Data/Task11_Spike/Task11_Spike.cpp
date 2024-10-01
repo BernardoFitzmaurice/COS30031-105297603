@@ -4,7 +4,7 @@
 
 int main()
 {
-	std::vector<std::string> Inventory = { "Sword", "\nBody Armor", "\nShield", "\nFrog" };
+	std::vector<std::string> Inventory = { "Sword", "\nBody Armor", "\nShield", "\nFrog"};
 	bool coinAdded = false; // flag to track if coin has been added
 
 	int choice;
@@ -29,13 +29,12 @@ int main()
 			//Add coin to inventory
 		case 1:
 			if (!coinAdded) { // only add coin if it hasn't been added before
-				Inventory.push_back("\nCoin");
-				coinAdded = true; // set flag to true
-			}
-			else {
-				std::cout << "You already have a coin in your inventory." << std::endl;
-			}
-			break;
+                Inventory.push_back("\nCoin");
+                coinAdded = true; // set flag to true
+            } else {
+                std::cout << "You already have a coin in your inventory." << std::endl;
+            }
+            break;
 
 			//Remove Mitic Frog from inventory and ruin your life
 		case 2:
