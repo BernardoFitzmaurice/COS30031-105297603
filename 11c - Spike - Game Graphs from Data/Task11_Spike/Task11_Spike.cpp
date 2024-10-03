@@ -1,60 +1,137 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <algorithm>
+using namespace std;
 
-int main()
+struct Location
 {
-	std::vector<std::string> Inventory = { "Sword", "\nBody Armor", "\nShield", "\nFrog"};
-	bool coinAdded = false; // flag to track if coin has been added
+    string name;
+    string description;
+    map<string, string> connections; // direction -> location name
+};
 
-	int choice;
-	do {
-		//Print vector
-		std::cout << "View inventory:" << std::endl;
-		for (int i = 0; i < Inventory.size(); i++)
-		{
-			std::cout << Inventory[i];
-			if (i != Inventory.size() - 1)
-			{
-				std::cout << ", ";
-			}
-		}
-		std::cout << std::endl;
+string lowercase(const string& str) {
+    string result = str;
+    for (char& c : result) {
+        c = tolower(c);
+    }
+    return result;
+}
 
-		//Add and Remove item to inventory
-		std::cout << "\nEnter your choice: \nTo pick up a coin: 1 \nTo remove The Frog and ruin you life: 2 \nTo exit inventory: 3" << std::endl;
-		std::cin >> choice;
+int main(int argc, char* argv[])
+{
+    if (argc < 2) {
+        cout << "Usage: " << argv[0] << " <Adventure.txt>" << endl;
+        return 1;
+    }
 
-		switch (choice) {
-			//Add coin to inventory
-		case 1:
-			if (!coinAdded) { // only add coin if it hasn't been added before
-                Inventory.push_back("\nCoin");
-                coinAdded = true; // set flag to true
-            } else {
-                std::cout << "You already have a coin in your inventory." << std::endl;
+    ifstream inputFile(argv[1]);
+    if (!inputFile) // Check if file is open
+    {
+        cout << "Error opening file." << endl;
+        return 1;
+    }
+
+    map<string, Location> gameWorld; // A graph to store the game locations
+
+    string line, locationName, description, connections;
+
+    while (getline(inputFile, line))
+    {
+        if (line.find("Location") != string::npos)
+        {
+            Location loc;
+
+            // Extract location name
+            locationName = line.substr(line.find(":") + 2);
+            loc.name = locationName;  // Keep the original case
+
+            // Read the description
+            getline(inputFile, line);
+            description = line.substr(line.find(":") + 2);
+            loc.description = description;
+
+            // Read the connections
+            getline(inputFile, line);
+            connections = line.substr(line.find(":") + 2);
+
+            // Analyze the connections
+            stringstream ss(connections);
+            string connection;
+            while (getline(ss, connection, ','))
+            {
+                size_t equalPos = connection.find("=");
+                string direction = connection.substr(0, equalPos);
+                string destLocation = connection.substr(equalPos + 1);
+
+                // Remove extra spaces
+                direction.erase(direction.find_last_not_of(' ') + 1);
+                destLocation.erase(0, destLocation.find_first_not_of(' '));
+
+                direction = lowercase(direction); // convert to lowercase
+
+                // Store the connection
+                loc.connections[direction] = destLocation;
             }
+
+            // Add the location to the game
+            gameWorld[loc.name] = loc;
+        }
+    }
+
+    inputFile.close();
+
+    // 'Go' & 'Quit' commands
+    string currentLocation = "Kitchen"; // Starting location, no lowercase conversion
+    string input;
+
+    while (true)
+    {
+        // Show location details
+        Location& loc = gameWorld[currentLocation];
+        cout << "\nThe location you're in is: " << loc.name << endl;
+        cout << loc.description << endl;
+
+        // Display connections
+        cout << "Possible connections: ";
+        for (const auto& pair : loc.connections)
+        {
+            string dir = pair.first;
+            cout << dir << " ";
+        }
+        cout << endl;
+
+        // User input
+        cout << "\nEnter: go <direction> or quit: ";
+        getline(cin, input);
+
+        if (input == "quit")
+        {
+            cout << "Weak" << endl;
             break;
+        }
+        else if (input.substr(0, 3) == "go ")
+        {
+            string direction = input.substr(3);
+            direction = lowercase(direction); // convert to lowercase
+            if (loc.connections.find(direction) != loc.connections.end())
+            {
+                currentLocation = loc.connections[direction]; // Move to new location
+            }
+            else
+            {
+                cout << "You crashed to a wall like a frog.\n" << endl;
+            }
+        }
+        else
+        {
+            cout << "Invalid command.\n " << endl;
+        }
+    }
 
-			//Remove Mitic Frog from inventory and ruin your life
-		case 2:
-			for (int i = Inventory.size() - 1; i >= 0; i--)
-			{
-				if (Inventory[i] == "\nFrog")
-				{
-					Inventory.erase(Inventory.begin() + i);
-				}
-			}
-			break;
-
-			//Exit inventory
-		case 3:
-			break;
-
-		default:
-			std::cout << "Invalid choice" << std::endl;
-		}
-	} while (choice != 3);
-
-	return 0;
+    return 0;
 }
