@@ -1,6 +1,6 @@
 Location: Kitchen
 Description: Big place for a family of 5, full of dirty dishes.
-Connections: south=Living Room, east=Hallway
+Connections: east=Hallway, south=Living Room
 
 Location: Living Room
 Description: Smaller than the kitchen, but still big. A TV that's been on for a while.

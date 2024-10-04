@@ -40,6 +40,7 @@ int main(int argc, char* argv[])
 
     string line, locationName, description, connections;
 
+    // Read all locations and their connections
     while (getline(inputFile, line))
     {
         if (line.find("Location") != string::npos)
@@ -85,6 +86,29 @@ int main(int argc, char* argv[])
 
     inputFile.close();
 
+    // Add opposite directions
+    for (auto& pair : gameWorld)
+    {
+        Location& loc = pair.second;
+
+        if (loc.connections.find("north") != loc.connections.end()) {
+            string destLocation = loc.connections["north"];
+            gameWorld[destLocation].connections["south"] = loc.name;
+        }
+        if (loc.connections.find("south") != loc.connections.end()) {
+            string destLocation = loc.connections["south"];
+            gameWorld[destLocation].connections["north"] = loc.name;
+        }
+        if (loc.connections.find("east") != loc.connections.end()) {
+            string destLocation = loc.connections["east"];
+            gameWorld[destLocation].connections["west"] = loc.name;
+        }
+        if (loc.connections.find("west") != loc.connections.end()) {
+            string destLocation = loc.connections["west"];
+            gameWorld[destLocation].connections["east"] = loc.name;
+        }
+    }
+
     // 'Go' & 'Quit' commands
     string currentLocation = "Kitchen"; // Starting location, no lowercase conversion
     string input;
@@ -129,7 +153,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            cout << "Invalid command.\n " << endl;
+            cout << "Invalid command.\n" << endl;
         }
     }
 
