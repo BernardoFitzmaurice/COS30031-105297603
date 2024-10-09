@@ -1,6 +1,6 @@
 Location: Kitchen
 Description: Big place for a family of 5, full of dirty dishes.
-Connections: east=Hallway, south=Living Room
+Connections: east=Hallway,south=Living Room
 
 Location: Living Room
 Description: Smaller than the kitchen, but still big. A TV that's been on for a while.
@@ -8,7 +8,7 @@ Connections: north=Kitchen
 
 Location: Hallway
 Description: A narrow and long hallway, full of family photos.
-Connections: north=Main Room, west=Kitchen
+Connections: north=Main Room,west=Kitchen
 
 Location: Main Room
 Description: A king size bed and a lot of dirty clothes.

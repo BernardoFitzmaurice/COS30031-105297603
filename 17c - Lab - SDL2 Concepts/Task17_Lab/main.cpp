@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <iostream>
-
+#include <cstdlib>
+#include <ctime>
 
 int main(int argc, char* argv[]) {
 	//Initialize SDL & Create window
@@ -27,8 +28,23 @@ int main(int argc, char* argv[]) {
 			if (windowEvent.type == SDL_QUIT) {
 				running = false; //Exit the loop when the window is closed
 			}
+			else if (windowEvent.type == SDL_KEYDOWN) {
+				if (windowEvent.key.keysym.sym == SDLK_r) {
+					//Generate random color
+					Uint8 r = std::rand() % 256;
+					Uint8 g = std::rand() % 256;
+					Uint8 b = std::rand() % 256;
+
+					//Set background to random color
+					SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, r, g, b));
+					SDL_UpdateWindowSurface(window);
+				}
+			}
 		}
 	}
+
+	//Message when window is closed
+	std::cout << "Byebye Pepe the Frog" << std::endl;
 
 	//Clean up
 	SDL_DestroyWindow(window);

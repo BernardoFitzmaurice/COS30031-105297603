@@ -76,6 +76,7 @@ int main(int argc, char* argv[])
 
                 // Store the connection
                 loc.connections[direction] = destLocation;
+                cout << "Loading" << locationName << "direction: " << direction << " -> " << destLocation << '\n';
             }
 
             // Add the location to the game
@@ -101,7 +102,7 @@ int main(int argc, char* argv[])
         for (const auto& pair : loc.connections)
         {
             string dir = pair.first;
-            cout << dir << " ";
+            cout << dir << "->" << pair.second << " ";
         }
         cout << endl;
 
