@@ -12,6 +12,7 @@ struct Location
     string name;
     string description;
     vector<string> entities; // List of entities in the location
+    map<string, string> entityDescriptions; // Entity name -> description
     map<string, string> connections; // direction -> location name
 };
 
@@ -40,13 +41,13 @@ void processCommand(const string& command, const string& argument, map<string, L
             cout << "You crashed to a wall like a frog.\n" << endl;
         }
     }
-    // COmmand of Location details
+    // Command of Location details
     else if (command == "look")
     {
         Location& loc = gameWorld[currentLocation];
         cout << "\nYou are in: " << loc.name << endl;
         cout << loc.description << endl;
-        cout << "Entities here: ";
+        cout << "Entities: ";
         for (const auto& entity : loc.entities)
         {
             cout << entity << ", ";
@@ -57,9 +58,9 @@ void processCommand(const string& command, const string& argument, map<string, L
     else if (command == "look at")
     {
         Location& loc = gameWorld[currentLocation];
-        if (find(loc.entities.begin(), loc.entities.end(), argument) != loc.entities.end())
+        if (loc.entityDescriptions.find(argument) != loc.entityDescriptions.end())
         {
-            cout << "You see a " << argument << " here.\n";
+            cout << argument << ": " << loc.entityDescriptions[argument] << endl;
         }
         else
         {
@@ -78,7 +79,7 @@ void processCommand(const string& command, const string& argument, map<string, L
         cout << "alias <alias> <command> - Remap a command.\n";
         cout << "debug tree - Show debug information.\n";
     }
-    // Additional commands like INVENTORY, ALIAS, and DEBUG TREE can be implemented similarly.
+    // INVENTORY, ALIAS, and DEBUG TREE still a work in progress
 }
 
 int main(int argc, char* argv[])
@@ -150,6 +151,11 @@ int main(int argc, char* argv[])
                     entity.erase(entity.find_last_not_of(' ') + 1); // Remove trailing spaces
                     entity.erase(0, entity.find_first_not_of(' ')); // Remove leading spaces
                     loc.entities.push_back(entity);
+
+                    // Read the entity description line
+                    getline(inputFile, line);
+                    string entityDescription = line.substr(line.find(":") + 2);
+                    loc.entityDescriptions[entity] = entityDescription;
                 }
             }
 
@@ -180,6 +186,18 @@ int main(int argc, char* argv[])
             cout << dir << "->" << pair.second << " ";
         }
         cout << endl;
+
+        // Display entities in the location
+        if (!loc.entities.empty()) {
+            cout << "Entities present: ";
+            for (const auto& entity : loc.entities) {
+                cout << entity << ", ";
+            }
+            cout << endl;
+        }
+        else {
+            cout << "No entities here." << endl;
+        }
 
         // User input
         cout << "\nEnter: go <direction> or quit: ";

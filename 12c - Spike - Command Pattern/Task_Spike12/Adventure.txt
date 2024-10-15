@@ -1,19 +1,27 @@
 Location: Kitchen
 Description: Big place for a family of 5, full of dirty dishes.
 Connections: east=Hallway,south=Living Room
-Entities: Kitchen table, Blender
+Entities: Kitchen table,Blender
+Kitchen table: Big but old, made out of wood.
+Blender: Newly bought, barely used.
 
 Location: Living Room
 Description: Smaller than the kitchen, but still big. A TV that's been on for a while.
 Connections: north=Kitchen
-Entities: TV, Sofa
+Entities: TV,Sofa
+TV: Big old TV, its been on for a while.
+Sofa: Brown sofa, seems recently restored.
 
 Location: Hallway
 Description: A narrow and long hallway, full of family photos.
 Connections: north=Main Room,west=Kitchen
-Entities: Picture frame, Urn of ashes
+Entities: Picture frame,Urn of ashes
+Picture frame: Family foto of 5 people.
+Urn of ashes: Simple urn with ashes inside.
 
 Location: Main Room
 Description: A king size bed and a lot of dirty clothes.
 Connections: south=Hallway
-Entities: Bed, Night table
+Entities: Bed,Night table
+Bed: King size bed with a red blanket.
+Night table: Small night table next to the bed.
