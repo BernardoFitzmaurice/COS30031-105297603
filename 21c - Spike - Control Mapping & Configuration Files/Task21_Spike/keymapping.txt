@@ -1,0 +1,4 @@
+119 MOVE_UP     # ASCII for 'w'
+115 MOVE_DOWN   # ASCII for 's'
+97 MOVE_LEFT    # ASCII for 'a'
+100 MOVE_RIGHT  # ASCII for 'd'
