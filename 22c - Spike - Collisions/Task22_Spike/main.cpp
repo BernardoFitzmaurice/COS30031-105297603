@@ -36,6 +36,7 @@ int main(int argc, char* argv[]) {
 
 	bool running = true;
 	bool collided = false;
+	bool drawBox = true; // Track if a box or a circle is drawn
 	SDL_Event e;
 
 	//Main loop
@@ -44,55 +45,68 @@ int main(int argc, char* argv[]) {
 			if (e.type == SDL_QUIT) {
 				running = false;
 			}
+			if (e.type == SDL_KEYDOWN) {
+				if (e.key.keysym.sym == SDLK_SPACE) {
+					drawBox = !drawBox;
+				}
+			}
 		}
 		
-		//Moving box velocity
-		movingBox.move(velX, velY);
+		//Moving box
+		if (drawBox) {
+			movingBox.move(velX, velY);
 
-		// Bounce off the walls
-		if (movingBox.rect.x < 0 || movingBox.rect.x + movingBox.rect.w > 640) {
-			velX = -velX;
-		}
-		else if(movingBox.rect.y <= 0 || movingBox.rect.y + movingBox.rect.h >= 480){
-			velY = -velY;
-		}
+			// Bounce off the walls
+			if (movingBox.rect.x < 0 || movingBox.rect.x + movingBox.rect.w > 640) {
+				velX = -velX;
+			}
+			else if (movingBox.rect.y <= 0 || movingBox.rect.y + movingBox.rect.h >= 480) {
+				velY = -velY;
+			}
 
-		movingCircle.move(velX, velY);
-
-		if (movingCircle.rect.x < 0 || movingCircle.rect.x + movingCircle.rect.w > 640) {
-			velX = -velX;
+			// Check collision
+			collided = Collision::checkCollision(fixedBox, movingBox);
 		}
-		else if (movingCircle.rect.y <= 0 || movingCircle.rect.y + movingCircle.rect.h >= 480) {
-			velY = -velY;
-		}
+		else {
+			movingCircle.move(velX, velY);
 
-		// Check collision
-		collided = Collision::checkCollision(fixedBox, movingBox);
-		collided = Collision::checkCollision(fixedCircle, movingCircle);
+			if (movingCircle.rect.x < 0 || movingCircle.rect.x + movingCircle.rect.w > 640) {
+				velX = -velX;
+			}
+			else if (movingCircle.rect.y <= 0 || movingCircle.rect.y + movingCircle.rect.h >= 480) {
+				velY = -velY;
+			}
+
+			// Check collision
+			collided = Collision::checkCollision(fixedCircle, movingCircle);
+		}
 
 		// Clear the screen
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
 		// Draw the boxes
-		if (collided) {
-			movingBox.color = { 255, 255, 0 ,255 }; // Yellow
+		if (drawBox) {
+			if (collided) {
+				movingBox.color = { 255, 255, 0 ,255 }; // Yellow
+			}
+			else {
+				movingBox.color = red;
+			}
+			fixedBox.draw(renderer);
+			movingBox.draw(renderer);
 		}
 		else {
-			movingBox.color = red;
+			// Draw the circles
+			if (collided) {
+				movingCircle.setTexture(renderer, "Face.png"); // Green
+			}
+			else {
+				movingCircle.setTexture(renderer, "Circle.png");
+			}
+			fixedCircle.draw(renderer);
+			movingCircle.draw(renderer);
 		}
-		fixedBox.draw(renderer);
-		movingBox.draw(renderer);
-
-		// Draw the circles
-		if (collided) {
-			movingCircle.setTexture(renderer, "Face.png"); // Green
-		} 
-		else {
-			movingCircle.setTexture(renderer, "Circle.png");
-		}
-		fixedCircle.draw(renderer);
-		movingCircle.draw(renderer);
 
 		// Show on screen
 		SDL_RenderPresent(renderer);
