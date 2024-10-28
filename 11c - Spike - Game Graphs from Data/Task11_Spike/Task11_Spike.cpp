@@ -1,19 +1,14 @@
 #include <iostream>
-#include <vector>
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <map>
-#include <algorithm>
+#include <string>
+#include "Location.h"
+#include "Player.h"
+
 using namespace std;
 
-struct Location
-{
-    string name;
-    string description;
-    map<string, string> connections; // direction -> location name
-};
-
+// Convert string to lowercase
 string lowercase(const string& str) {
     string result = str;
     for (char& c : result) {
@@ -22,16 +17,14 @@ string lowercase(const string& str) {
     return result;
 }
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
     if (argc < 2) {
         cout << "Usage: " << argv[0] << " <Adventure.txt>" << endl;
         return 1;
     }
 
     ifstream inputFile(argv[1]);
-    if (!inputFile) // Check if file is open
-    {
+    if (!inputFile) {
         cout << "Error opening file." << endl;
         return 1;
     }
@@ -40,10 +33,8 @@ int main(int argc, char* argv[])
 
     string line, locationName, description, connections;
 
-    while (getline(inputFile, line))
-    {
-        if (line.find("Location") != string::npos)
-        {
+    while (getline(inputFile, line)) {
+        if (line.find("Location") != string::npos) {
             Location loc;
 
             // Extract location name
@@ -62,8 +53,7 @@ int main(int argc, char* argv[])
             // Analyze the connections
             stringstream ss(connections);
             string connection;
-            while (getline(ss, connection, ','))
-            {
+            while (getline(ss, connection, ',')) {
                 size_t equalPos = connection.find("=");
                 string direction = connection.substr(0, equalPos);
                 string destLocation = connection.substr(equalPos + 1);
@@ -72,11 +62,11 @@ int main(int argc, char* argv[])
                 direction.erase(direction.find_last_not_of(' ') + 1);
                 destLocation.erase(0, destLocation.find_first_not_of(' '));
 
-                direction = lowercase(direction); // convert to lowercase
+                direction = lowercase(direction); // Convert to lowercase
 
                 // Store the connection
-                loc.connections[direction] = destLocation;
-                cout << "Loading" << locationName << "direction: " << direction << " -> " << destLocation << '\n';
+                loc.addConnection(direction, destLocation);
+                cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n';
             }
 
             // Add the location to the game
@@ -86,50 +76,30 @@ int main(int argc, char* argv[])
 
     inputFile.close();
 
-    // 'Go' & 'Quit' commands
-    string currentLocation = "Kitchen"; // Starting location, no lowercase conversion
+    Player player("Kitchen"); // Starting location, no lowercase conversion
     string input;
 
-    while (true)
-    {
+    while (true) {
         // Show location details
-        Location& loc = gameWorld[currentLocation];
+        Location& loc = gameWorld[player.currentLocation];
         cout << "\nThe location you're in is: " << loc.name << endl;
         cout << loc.description << endl;
-
-        // Display connections
-        cout << "Possible connections: ";
-        for (const auto& pair : loc.connections)
-        {
-            string dir = pair.first;
-            cout << dir << "->" << pair.second << " ";
-        }
-        cout << endl;
+        loc.displayConnections();
 
         // User input
         cout << "\nEnter: go <direction> or quit: ";
         getline(cin, input);
 
-        if (input == "quit")
-        {
+        if (input == "quit") {
             cout << "Weak" << endl;
             break;
         }
-        else if (input.substr(0, 3) == "go ")
-        {
-            string direction = input.substr(3);
-            direction = lowercase(direction); // convert to lowercase
-            if (loc.connections.find(direction) != loc.connections.end())
-            {
-                currentLocation = loc.connections[direction]; // Move to new location
-            }
-            else
-            {
-                cout << "You crashed to a wall like a frog.\n" << endl;
-            }
+        else if (input.substr(0, 3) == "go ") {
+            // Extract direction and move player
+            string direction = lowercase(input.substr(3));
+            player.move(direction, gameWorld);
         }
-        else
-        {
+        else {
             cout << "Invalid command.\n " << endl;
         }
     }
