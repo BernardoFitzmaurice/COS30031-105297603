@@ -6,6 +6,8 @@
 #include "Location.h"
 #include "Player.h"
 #include "Inventory.h"
+#include "Entity.h"
+#include "CMD_Manager.h"
 
 using namespace std;
 
@@ -32,6 +34,7 @@ int main(int argc, char* argv[]) {
     }
 
     map<string, Location> gameWorld; // A graph to store the game locations
+	map<string, vector<Entity>> locationEntities; // Entities in each location
 
     string line, locationName, description, connections;
 
@@ -55,6 +58,7 @@ int main(int argc, char* argv[]) {
             // Analyze the connections
             stringstream ss(connections);
             string connection;
+
             while (getline(ss, connection, ',')) {
                 size_t equalPos = connection.find("=");
                 string direction = connection.substr(0, equalPos);
@@ -74,11 +78,30 @@ int main(int argc, char* argv[]) {
             // Add the location to the game
             gameWorld[loc.name] = loc;
         }
+        else if (line.find("Entities") != string::npos) {
+			string entityNames = line.substr(line.find(":") + 2);
+			vector<string> entities;
+            stringstream ss(entityNames);
+			string entityName;
+
+            while (getline(ss, entityName, ',')) {
+				entities.push_back(entityName);
+            }
+
+            for (const string& entityName : entities) {
+				getline(inputFile, line);
+				string entityDesc = line.substr(line.find(":") + 2);
+				locationEntities[locationName].push_back(Entity(entityName, entityDesc));
+            }
+        }
     }
 
     inputFile.close();
 
     Player player("Kitchen"); // Starting location, no lowercase conversion
+    Inventory playerInventory;
+    CMD_Manager commandManager;
+    
     string input;
 
     while (true) {
@@ -88,49 +111,26 @@ int main(int argc, char* argv[]) {
         cout << loc.description << endl;
         loc.displayConnections();
 
+        if (locationEntities.find(loc.name) != locationEntities.end()) {
+            cout << "Entities in this location: ";
+            for (const auto& entity : locationEntities[loc.name]) {
+				cout << entity.getName() << ", ";
+            }
+            cout << endl;
+        }
+
         // User input
-        cout << "\nEnter: go <direction> or quit: ";
+        cout << "\nCommands:\n- go <direction>\n- look at <entity>\n- open inventory\n- quit\nEnter command: ";
         getline(cin, input);
 
         if (input == "quit") {
-            cout << "Weak" << endl;
+			cout << "Weak" << endl;
             break;
         }
-        else if (input.substr(0, 3) == "go ") {
-            // Extract direction and move player
-            string direction = lowercase(input.substr(3));
-            player.move(direction, gameWorld);
-        }
-        else {
-            cout << "Invalid command.\n " << endl;
-        }
+        // Pass input to command manager
+        commandManager.execute(input, player, gameWorld, locationEntities, playerInventory);
+
     }
-
-    Inventory playerInventory;
-    playerInventory.viewInventory(); // Show initial inventory
-    int choice;
-
-    do {
-        std::cout << "\nEnter your choice:\n1: Pick up a coin\n2: Remove Frog\n3: View Inventory\n4: Exit Inventory\n";
-        std::cin >> choice;
-
-        switch (choice) {
-        case 1:
-            playerInventory.addCoin();
-            break;
-        case 2:
-            playerInventory.removeFrog();
-            break;
-        case 3:
-            playerInventory.viewInventory();
-            break;
-        case 4:
-            std::cout << "Exiting Inventory.\n";
-            break;
-        default:
-            std::cout << "Invalid choice.\n";
-        }
-    } while (choice != 4);
 
     return 0;
 }

@@ -127,14 +127,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AliasCommand.cpp" />
+    <ClCompile Include="CMD.cpp" />
+    <ClCompile Include="CMD_Manager.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GoCommand.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Location.cpp" />
+    <ClCompile Include="LookAtCommand.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="OpenInventoryCommand.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AliasCommand.h" />
+    <ClInclude Include="CMD.h" />
+    <ClInclude Include="CMD_Manager.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="GoCommand.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Location.h" />
+    <ClInclude Include="LookAtCommand.h" />
+    <ClInclude Include="OpenInventoryCommand.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
