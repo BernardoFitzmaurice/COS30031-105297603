@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
 
                 // Store the connection
                 loc.addConnection(direction, destLocation);
-                cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n';
+                cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n'; //Debug
             }
 
             // Add the location to the game
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
         }
 
         // User input
-        cout << "\nCommands:\n- go <direction>\n- look at <entity>\n- open inventory\n- quit\nEnter command: ";
+        cout << "\nCommands:\n- go <direction>\n- help\n- open inventory\n- lookat <entity>\n- alias <command - new command>\n- debug tree\n- quit\nEnter command: ";
         getline(cin, input);
 
         if (input == "quit") {

@@ -10,13 +10,16 @@ void CMD::executeCommand(const std::string& input, Player& player,
 
     std::string resolvedInput = resolveAlias(input); // Resolve aliases before executing
 
+    // Debug output to verify resolved command
+    //std::cout << "Resolved Command: " << resolvedInput << std::endl;
+
 	// Check if the input starts with any command registered
     for (const auto& pair : commandMap) { // Use 'pair' to hold the key-value pair
         const std::string& key = pair.first; // Access the key
         const std::unique_ptr<Command>& command = pair.second; // Access the command
 
-        if (input.find(key) == 0) { // If the input starts with the command key
-            command->execute(input, player, gameWorld, locationEntities, inventory);
+        if (resolvedInput.find(key) == 0) { // If the input starts with the command key
+            command->execute(resolvedInput, player, gameWorld, locationEntities, inventory);
             return; // Command executed, return early
         }
     }

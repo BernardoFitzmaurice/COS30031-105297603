@@ -6,7 +6,7 @@ void LookAtCommand::execute(const std::string& input, Player& player,
 	std::map<std::string, std::vector<Entity>>& locationEntities,
 	Inventory& inventory) {
 
-	std::string entityName = input.substr(8);
+	std::string entityName = input.substr(7);
 	const auto& locEntities = locationEntities[player.currentLocation];
 	bool found = false;
 
