@@ -10,7 +10,6 @@
 #include "OpenInventoryCommand.h"
 #include "AliasCommand.h"
 #include "Command.h"
-#include "AliasCommand.h"
 #include "Debug_Tree.h"
 #include "HelpCommand.h"
 

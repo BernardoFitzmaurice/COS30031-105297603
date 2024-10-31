@@ -13,6 +13,9 @@ void LookAtCommand::execute(const std::string& input, Player& player,
 	for (const auto& entity : locEntities) {
 		if (entity.getName() == entityName) {
 			std::cout << entity.getDescription() << std::endl;
+			if (!entity.getEntities().empty()) {
+				lookInsideEntity(entity);
+			}
 			found = true;
 			break;
 		}
@@ -21,4 +24,17 @@ void LookAtCommand::execute(const std::string& input, Player& player,
 	if (!found) {
 		std::cout << "No entity found." << std::endl;
 	}
+}
+
+void LookAtCommand::lookInsideEntity(const Entity& entity) {
+	if (entity.getEntities().empty()) {
+		std::cout << "Nothing to see inside." << std::endl;
+		return;
+	}
+
+	std::cout << "Inside " << entity.getName() << " you see: ";
+	for (const auto& subEntity : entity.getEntities()) {
+		std::cout << subEntity->getName() << " (" << subEntity->getDescription() << "), ";
+	}
+	std::cout << std::endl;
 }

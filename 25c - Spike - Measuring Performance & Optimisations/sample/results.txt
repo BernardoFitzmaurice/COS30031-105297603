@@ -1,0 +1,320 @@
+-- New Test: 	Test A1Loops: 	146173
+Time (ms): 	10000
+Loops/Second: 	14617.3
+Num boxes: 	35
+-- New Test: 	Test A2Loops: 	292393
+Time (ms): 	10000
+Loops/Second: 	29239.3
+Num boxes: 	35
+-- New Test: 	Test BLoops: 	685235
+Time (ms): 	10000
+Loops/Second: 	68523.5
+Num boxes: 	35
+-- New Test: 	Test CLoops: 	1770847
+Time (ms): 	10000
+Loops/Second: 	177085
+Num boxes: 	35
+-- New Test: 	Test DLoops: 	2301217
+Time (ms): 	10000
+Loops/Second: 	230122
+Num boxes: 	35
+-- New Test: 	Test A1Loops: 	134727
+Time (ms): 	10000
+Loops/Second: 	13472.7
+Num boxes: 	36
+-- New Test: 	Test A2Loops: 	283374
+Time (ms): 	10000
+Loops/Second: 	28337.4
+Num boxes: 	36
+-- New Test: 	Test BLoops: 	656888
+Time (ms): 	10000
+Loops/Second: 	65688.8
+Num boxes: 	36
+-- New Test: 	Test CLoops: 	1678899
+Time (ms): 	10000
+Loops/Second: 	167890
+Num boxes: 	36
+-- New Test: 	Test DLoops: 	2184423
+Time (ms): 	10000
+Loops/Second: 	218442
+Num boxes: 	36
+-- New Test: 	Test A1Loops: 	133459
+Time (ms): 	10000
+Loops/Second: 	13345.9
+Num boxes: 	37
+-- New Test: 	Test A2Loops: 	277275
+Time (ms): 	10000
+Loops/Second: 	27727.5
+Num boxes: 	37
+-- New Test: 	Test BLoops: 	629384
+Time (ms): 	10000
+Loops/Second: 	62938.4
+Num boxes: 	37
+-- New Test: 	Test CLoops: 	1622678
+Time (ms): 	10000
+Loops/Second: 	162268
+Num boxes: 	37
+-- New Test: 	Test DLoops: 	2084386
+Time (ms): 	10000
+Loops/Second: 	208439
+Num boxes: 	37
+-- New Test: 	Test A1Loops: 	125158
+Time (ms): 	10000
+Loops/Second: 	12515.8
+Num boxes: 	38
+-- New Test: 	Test A2Loops: 	262784
+Time (ms): 	10000
+Loops/Second: 	26278.4
+Num boxes: 	38
+-- New Test: 	Test BLoops: 	594280
+Time (ms): 	10000
+Loops/Second: 	59428
+Num boxes: 	38
+-- New Test: 	Test CLoops: 	1552028
+Time (ms): 	10000
+Loops/Second: 	155203
+Num boxes: 	38
+-- New Test: 	Test DLoops: 	1969859
+Time (ms): 	10000
+Loops/Second: 	196986
+Num boxes: 	38
+-- New Test: 	Test A1Loops: 	119520
+Time (ms): 	10000
+Loops/Second: 	11952
+Num boxes: 	39
+-- New Test: 	Test A2Loops: 	247248
+Time (ms): 	10000
+Loops/Second: 	24724.8
+Num boxes: 	39
+-- New Test: 	Test BLoops: 	561585
+Time (ms): 	10000
+Loops/Second: 	56158.5
+Num boxes: 	39
+-- New Test: 	Test CLoops: 	1480351
+Time (ms): 	10000
+Loops/Second: 	148035
+Num boxes: 	39
+-- New Test: 	Test DLoops: 	1886684
+Time (ms): 	10000
+Loops/Second: 	188668
+Num boxes: 	39
+-- New Test: 	Test A1Loops: 	120878
+Time (ms): 	10000
+Loops/Second: 	12087.8
+Num boxes: 	40
+-- New Test: 	Test A2Loops: 	246477
+Time (ms): 	10000
+Loops/Second: 	24647.7
+Num boxes: 	40
+-- New Test: 	Test BLoops: 	554112
+Time (ms): 	10000
+Loops/Second: 	55411.2
+Num boxes: 	40
+-- New Test: 	Test CLoops: 	1477873
+Time (ms): 	10000
+Loops/Second: 	147787
+Num boxes: 	40
+-- New Test: 	Test DLoops: 	1881600
+Time (ms): 	10000
+Loops/Second: 	188160
+Num boxes: 	40
+-- New Test: 	Test A1Loops: 	113262
+Time (ms): 	10000
+Loops/Second: 	11326.2
+Num boxes: 	41
+-- New Test: 	Test A2Loops: 	232220
+Time (ms): 	10000
+Loops/Second: 	23222
+Num boxes: 	41
+-- New Test: 	Test BLoops: 	526472
+Time (ms): 	10000
+Loops/Second: 	52647.2
+Num boxes: 	41
+-- New Test: 	Test CLoops: 	1403522
+Time (ms): 	10000
+Loops/Second: 	140352
+Num boxes: 	41
+-- New Test: 	Test DLoops: 	1753394
+Time (ms): 	10000
+Loops/Second: 	175339
+Num boxes: 	41
+-- New Test: 	Test A1Loops: 	110039
+Time (ms): 	10000
+Loops/Second: 	11003.9
+Num boxes: 	42
+-- New Test: 	Test A2Loops: 	224252
+Time (ms): 	10000
+Loops/Second: 	22425.2
+Num boxes: 	42
+-- New Test: 	Test BLoops: 	494289
+Time (ms): 	10000
+Loops/Second: 	49428.9
+Num boxes: 	42
+-- New Test: 	Test CLoops: 	1351662
+Time (ms): 	10000
+Loops/Second: 	135166
+Num boxes: 	42
+-- New Test: 	Test DLoops: 	1718887
+Time (ms): 	10000
+Loops/Second: 	171889
+Num boxes: 	42
+-- New Test: 	Test A1Loops: 	104991
+Time (ms): 	10000
+Loops/Second: 	10499.1
+Num boxes: 	43
+-- New Test: 	Test A2Loops: 	213894
+Time (ms): 	10000
+Loops/Second: 	21389.4
+Num boxes: 	43
+-- New Test: 	Test BLoops: 	480015
+Time (ms): 	10000
+Loops/Second: 	48001.5
+Num boxes: 	43
+-- New Test: 	Test CLoops: 	1298330
+Time (ms): 	10000
+Loops/Second: 	129833
+Num boxes: 	43
+-- New Test: 	Test DLoops: 	1578812
+Time (ms): 	10000
+Loops/Second: 	157881
+Num boxes: 	43
+-- New Test: 	Test A1Loops: 	98721
+Time (ms): 	10000
+Loops/Second: 	9872.1
+Num boxes: 	44
+-- New Test: 	Test A2Loops: 	197480
+Time (ms): 	10000
+Loops/Second: 	19748
+Num boxes: 	44
+-- New Test: 	Test BLoops: 	449968
+Time (ms): 	10000
+Loops/Second: 	44996.8
+Num boxes: 	44
+-- New Test: 	Test CLoops: 	1214330
+Time (ms): 	10000
+Loops/Second: 	121433
+Num boxes: 	44
+-- New Test: 	Test DLoops: 	1531342
+Time (ms): 	10000
+Loops/Second: 	153134
+Num boxes: 	44
+-- New Test: 	Test A1Loops: 	91179
+Time (ms): 	10000
+Loops/Second: 	9117.9
+Num boxes: 	45
+-- New Test: 	Test A2Loops: 	190236
+Time (ms): 	10000
+Loops/Second: 	19023.6
+Num boxes: 	45
+-- New Test: 	Test BLoops: 	437413
+Time (ms): 	10000
+Loops/Second: 	43741.3
+Num boxes: 	45
+-- New Test: 	Test CLoops: 	1187163
+Time (ms): 	10000
+Loops/Second: 	118716
+Num boxes: 	45
+-- New Test: 	Test DLoops: 	1488300
+Time (ms): 	10000
+Loops/Second: 	148830
+Num boxes: 	45
+-- New Test: 	Test A1Loops: 	91974
+Time (ms): 	10000
+Loops/Second: 	9197.4
+Num boxes: 	46
+-- New Test: 	Test A2Loops: 	186236
+Time (ms): 	10000
+Loops/Second: 	18623.6
+Num boxes: 	46
+-- New Test: 	Test BLoops: 	403184
+Time (ms): 	10000
+Loops/Second: 	40318.4
+Num boxes: 	46
+-- New Test: 	Test CLoops: 	1139465
+Time (ms): 	10000
+Loops/Second: 	113947
+Num boxes: 	46
+-- New Test: 	Test DLoops: 	1445225
+Time (ms): 	10000
+Loops/Second: 	144523
+Num boxes: 	46
+-- New Test: 	Test A1Loops: 	87930
+Time (ms): 	10000
+Loops/Second: 	8793
+Num boxes: 	47
+-- New Test: 	Test A2Loops: 	179018
+Time (ms): 	10000
+Loops/Second: 	17901.8
+Num boxes: 	47
+-- New Test: 	Test BLoops: 	402672
+Time (ms): 	10000
+Loops/Second: 	40267.2
+Num boxes: 	47
+-- New Test: 	Test CLoops: 	1078397
+Time (ms): 	10000
+Loops/Second: 	107840
+Num boxes: 	47
+-- New Test: 	Test DLoops: 	1370077
+Time (ms): 	10000
+Loops/Second: 	137008
+Num boxes: 	47
+-- New Test: 	Test A1Loops: 	83712
+Time (ms): 	10000
+Loops/Second: 	8371.2
+Num boxes: 	48
+-- New Test: 	Test A2Loops: 	171654
+Time (ms): 	10000
+Loops/Second: 	17165.4
+Num boxes: 	48
+-- New Test: 	Test BLoops: 	383665
+Time (ms): 	10000
+Loops/Second: 	38366.5
+Num boxes: 	48
+-- New Test: 	Test CLoops: 	1052793
+Time (ms): 	10000
+Loops/Second: 	105279
+Num boxes: 	48
+-- New Test: 	Test DLoops: 	1332423
+Time (ms): 	10000
+Loops/Second: 	133242
+Num boxes: 	48
+-- New Test: 	Test A1Loops: 	77970
+Time (ms): 	10000
+Loops/Second: 	7797
+Num boxes: 	49
+-- New Test: 	Test A2Loops: 	164762
+Time (ms): 	10000
+Loops/Second: 	16476.2
+Num boxes: 	49
+-- New Test: 	Test BLoops: 	362840
+Time (ms): 	10000
+Loops/Second: 	36284
+Num boxes: 	49
+-- New Test: 	Test CLoops: 	972342
+Time (ms): 	10000
+Loops/Second: 	97234.2
+Num boxes: 	49
+-- New Test: 	Test DLoops: 	1268093
+Time (ms): 	10000
+Loops/Second: 	126809
+Num boxes: 	49
+-- New Test: 	Test A1Loops: 	77078
+Time (ms): 	10000
+Loops/Second: 	7707.8
+Num boxes: 	50
+-- New Test: 	Test A2Loops: 	155439
+Time (ms): 	10000
+Loops/Second: 	15543.9
+Num boxes: 	50
+-- New Test: 	Test BLoops: 	349705
+Time (ms): 	10000
+Loops/Second: 	34970.5
+Num boxes: 	50
+-- New Test: 	Test CLoops: 	960218
+Time (ms): 	10000
+Loops/Second: 	96021.8
+Num boxes: 	50
+-- New Test: 	Test DLoops: 	1225456
+Time (ms): 	10000
+Loops/Second: 	122546
+Num boxes: 	50
