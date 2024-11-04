@@ -139,9 +139,12 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="LookAtCommand.cpp" />
+    <ClCompile Include="LookInCommand.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="OpenInventoryCommand.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PutInCommand.cpp" />
+    <ClCompile Include="TakeCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AliasCommand.h" />
@@ -155,8 +158,11 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="LookAtCommand.h" />
+    <ClInclude Include="LookInCommand.h" />
     <ClInclude Include="OpenInventoryCommand.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PutInCommand.h" />
+    <ClInclude Include="TakeCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,7 +3,6 @@
 #include <sstream>
 #include <map>
 #include <string>
-#include <vector>
 #include "Location.h"
 #include "Player.h"
 #include "Inventory.h"
@@ -35,88 +34,81 @@ int main(int argc, char* argv[]) {
 
     map<string, Location> gameWorld; // A graph to store the game locations
     map<string, vector<Entity>> locationEntities; // Entities in each location
-    string line, locationName;
-
-    cout << "Starting to load adventure data..." << endl;
+    string line, locationName, description, connections;
 
     while (getline(inputFile, line)) {
         if (line.find("Location") != string::npos) {
             Location loc;
+
+            // Extract location name
             locationName = line.substr(line.find(":") + 2);
-            loc.name = locationName;
+            loc.name = locationName;  // Keep the original case
 
+            // Read the description
             getline(inputFile, line);
-            loc.description = line.substr(line.find(":") + 2);
+            description = line.substr(line.find(":") + 2);
+            loc.description = description;
 
-            // Read connections for the location
+            // Read the connections
             getline(inputFile, line);
-            string connections = line.substr(line.find(":") + 2);
+            connections = line.substr(line.find(":") + 2);
+
+            // Analyze the connections
             stringstream ss(connections);
             string connection;
 
             while (getline(ss, connection, ',')) {
                 size_t equalPos = connection.find("=");
-                if (equalPos != string::npos) {
-                    string direction = connection.substr(0, equalPos);
-                    string destLocation = connection.substr(equalPos + 1);
+                string direction = connection.substr(0, equalPos);
+                string destLocation = connection.substr(equalPos + 1);
 
-                    // Remove extra spaces and lowercase direction
-                    direction.erase(direction.find_last_not_of(' ') + 1);
-                    destLocation.erase(0, destLocation.find_first_not_of(' '));
-                    direction = lowercase(direction);
+                // Remove extra spaces
+                direction.erase(direction.find_last_not_of(' ') + 1);
+                destLocation.erase(0, destLocation.find_first_not_of(' '));
 
-                    loc.addConnection(direction, destLocation);
-                }
-                else {
-                    std::cerr << "Error parsing connection in line: " << line << std::endl;
-                }
+                direction = lowercase(direction); // Convert to lowercase
+
+                // Store the connection
+                loc.addConnection(direction, destLocation);
+                cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n'; //Debug
             }
 
-            gameWorld[loc.name] = loc; // Add location to the game world
-            cout << "Loaded location: " << loc.name << endl; // Debug
+            // Add the location to the game
+            gameWorld[loc.name] = loc;
         }
         else if (line.find("Entities") != string::npos) {
-            vector<string> entities;
             string entityNames = line.substr(line.find(":") + 2);
+            vector<string> entities;
             stringstream ss(entityNames);
             string entityName;
 
             while (getline(ss, entityName, ',')) {
-                entityName.erase(entityName.find_last_not_of(' ') + 1); // trim spaces
                 entities.push_back(entityName);
             }
 
             for (const string& entityName : entities) {
                 getline(inputFile, line);
                 string entityDesc = line.substr(line.find(":") + 2);
-                Entity mainEntity(entityName, entityDesc);
-
-                // Check if entity has nested entities
-                while (getline(inputFile, line) && line.find("Contained") != string::npos) {
-                    string containedEntityName = line.substr(line.find(":") + 2);
-                    getline(inputFile, line);
-                    string containedEntityDesc = line.substr(line.find(":") + 2);
-
-                    auto nestedEntity = std::make_shared<Entity>(containedEntityName, containedEntityDesc);
-                    mainEntity.addEntity(nestedEntity);
-                }
-
-                locationEntities[locationName].push_back(mainEntity);
+                locationEntities[locationName].push_back(Entity(entityName, entityDesc));
             }
-            cout << "Loaded entities for location: " << locationName << endl; // Debug
         }
     }
 
     inputFile.close();
-    cout << "Adventure data loaded successfully." << endl;
 
-    // Initialize player and command manager
     Player player("Kitchen"); // Starting location, no lowercase conversion
     Inventory playerInventory;
     CMD_Manager commandManager;
 
     string input;
+
     while (true) {
+        // Check if the player's location exists in the game world
+        if (gameWorld.find(player.currentLocation) == gameWorld.end()) {
+            cout << "Error: Current location '" << player.currentLocation << "' not found in the game world.\n";
+            break;
+        }
+
         // Show location details
         Location& loc = gameWorld[player.currentLocation];
         cout << "\nThe location you're in is: " << loc.name << endl;
@@ -132,13 +124,14 @@ int main(int argc, char* argv[]) {
         }
 
         // User input
-        cout << "\nCommands:\n- go <direction>\n- help\n- open inventory\n- lookat <entity>\n- alias <command - new command>\n- debug tree\n- quit\nEnter command: ";
+        cout << "\nCommands:\n- go <direction>\n- help\n- open inventory\n- lookat <entity>\n- lookin <entity>\n- put <entity> in <container>\n- take <entity> from <container>\n- alias <command - new command>\n- debug tree\n- quit\nEnter command: ";
         getline(cin, input);
 
         if (input == "quit") {
-            cout << "Goodbye!" << endl;
+            cout << "Weak" << endl;
             break;
         }
+
         // Pass input to command manager
         commandManager.execute(input, player, gameWorld, locationEntities, playerInventory);
     }

@@ -10,13 +10,10 @@
 
 class LookAtCommand : public Command {
 public:
-    void execute(const std::string& input, Player& player,
-        std::map<std::string, Location>& gameWorld,
-        std::map<std::string, std::vector<Entity>>& locationEntities,
-        Inventory& inventory) override;
-
-private:
-    void lookInsideEntity(const Entity& entity);
+	void execute(const std::string& input, Player& player, 
+                 std::map<std::string, Location>& gameWorld, 
+                 std::map<std::string, std::vector<Entity>>& locationEntities, 
+                 Inventory& inventory) override;
 };
 
 #endif

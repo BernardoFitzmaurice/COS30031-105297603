@@ -1,7 +1,7 @@
 #include "Entity.h"
 
-Entity::Entity(const std::string& name, const std::string& description)
-	: name(name), description(description) {}
+Entity::Entity(const std::string& name, const std::string& description, bool container)
+	: name(name), description(description), isContainer(container) {}
 
 std::string Entity::getName() const {
     return name;
@@ -11,19 +11,36 @@ std::string Entity::getDescription() const {
     return description;
 }
 
-void Entity::addEntity(std::shared_ptr<Entity> entity) {
-    containedEntities.push_back(entity);
+bool Entity::canContainEntities() const {
+	return isContainer;
 }
 
-std::vector<std::shared_ptr<Entity>> Entity::getEntities() const {
-    return containedEntities;
+void Entity::addEntity(const Entity& entity) {
+	if (isContainer) {
+		containedEntities.push_back(entity);
+		std::cout << entity.getName() << "added to " << name << '\n';
+	}
 }
 
-std::shared_ptr<Entity> Entity::findEntity(const std::string& name) const {
-    for (const auto& entity : containedEntities) {
-        if (entity->getName() == name) {
-            return entity;
+bool Entity::removeEntity(const std::string& entityName) {
+    for (auto it = containedEntities.begin(); it != containedEntities.end(); ++it) {
+        if (it->getName() == entityName) {
+            containedEntities.erase(it);
+            std::cout << entityName << " removed from " << name << ".\n";
+            return true;
         }
     }
-    return nullptr;
+    return false;
+}
+
+void Entity::displayContents() const {
+    if (!containedEntities.empty()) {
+        std::cout << name << " contains:\n";
+        for (const auto& entity : containedEntities) {
+            std::cout << "- " << entity.getName() << "\n";
+        }
+    }
+    else {
+        std::cout << name << " is empty.\n";
+    }
 }

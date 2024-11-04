@@ -12,6 +12,9 @@
 #include "Command.h"
 #include "Debug_Tree.h"
 #include "HelpCommand.h"
+#include "LookInCommand.h"
+#include "PutInCommand.h"
+#include "TakeCommand.h"
 
 class CMD {
 private:
@@ -20,6 +23,10 @@ private:
     OpenInventoryCommand openInventoryCommand;
     AliasCommand aliasCommand;
 	Debug_Tree debugTree;
+	HelpCommand helpCommand;
+	LookInCommand lookInCommand;
+	PutInCommand putInCommand;
+	TakeCommand takeCommand;
 
 	std::unordered_map<std::string, std::unique_ptr<Command>> commandMap;
 
@@ -28,6 +35,9 @@ public:
         // Register commands
         commandMap["go"] = std::make_unique<GoCommand>();
         commandMap["lookat"] = std::make_unique<LookAtCommand>();
+        commandMap["lookin"] = std::make_unique<LookInCommand>();
+		commandMap["putin"] = std::make_unique<PutInCommand>();
+		commandMap["take"] = std::make_unique<TakeCommand>();
         commandMap["open inventory"] = std::make_unique<OpenInventoryCommand>();
         commandMap["debug tree"] = std::make_unique<Debug_Tree>();
         commandMap["help"] = std::make_unique<HelpCommand>();

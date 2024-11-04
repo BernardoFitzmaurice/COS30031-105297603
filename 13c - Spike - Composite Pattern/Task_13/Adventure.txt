@@ -4,11 +4,12 @@ Connections: east=Hallway,south=Living Room
 Entities: Kitchen table,Blender
 Kitchen table: Big but old, made out of wood.
 Blender: Newly bought, barely used.
-Contained: Carrot.
-Carrot: Old and rotting.
+Entity: Carrot.
+Description: Old and rotting.
+Location: Blender
 
 Location: Living Room
-Description: Smaller than the kitchen, but still big. A TV that's been on for a while.
+Description: Smaller than the kitchen, but still big.
 Connections: north=Kitchen
 Entities: TV,Sofa
 TV: Big old TV, its been on for a while.
@@ -18,12 +19,14 @@ Location: Hallway
 Description: A narrow and long hallway, full of family photos.
 Connections: north=Main Room,west=Kitchen
 Entities: Picture frame,Urn of ashes
-Picture frame: Family photo of 5 people.
+Picture frame: Family photo of 5 people. There's a something stuck behind.
 Urn of ashes: Simple urn with ashes inside.
-Contained: Ashes.
-Ashes: A lot of ash, seems like was a big guy.
-Contained: Golden ring.
-Golden ring: For a "big" person.
+Entity: Ashes
+Description: A lot of ash, seems like was a big guy.
+Location: Urn of Ashes
+Entity: Golden ring
+Description: For a "big" person.
+Location: Picture frame
 
 Location: Main Room
 Description: A king size bed and a lot of dirty clothes.
@@ -31,5 +34,6 @@ Connections: south=Hallway
 Entities: Bed,Night table
 Bed: King size bed with a red blanket.
 Night table: Small night table next to the bed.
-Contained: Notebook.
-Notebook: Small, almost fully used.
+Entity: Notebook
+Description: Small, almost fully used.
+Location: Night table
