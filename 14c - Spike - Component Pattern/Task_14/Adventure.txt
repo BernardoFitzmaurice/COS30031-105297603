@@ -1,0 +1,42 @@
+Location: Kitchen
+Description: Big place for a family of 5, full of dirty dishes.
+Connections: east=Hallway,south=Living Room
+Entities: KitchenTable,Blender
+KitchenTable: Big but old, made out of wood. Container=true
+Blender: Newly bought, barely used. Container=true
+Entity: Carrot
+Description: Old and rotting. Pickable=true
+Location: Blender
+Entity: Potion
+Description: A healing potion. Health=10, Pickable=true
+Location: Kitchen
+
+Location: Living Room
+Description: Smaller than the kitchen, but still big.
+Connections: north=Kitchen
+Entities: TV,Sofa
+TV: Big old TV, its been on for a while.
+Sofa: Brown sofa, seems recently restored.
+
+Location: Hallway
+Description: A narrow and long hallway, full of family photos.
+Connections: north=Main Room,west=Kitchen
+Entities: Picture,Urn
+Picture: Family photo of 5 people. There's a something stuck behind. Container=true
+Urn: Simple urn with ashes inside. Container=true
+Entity: Ashes
+Description: A lot of ash, seems like was a big guy. Pickable=true
+Location: Urn
+Entity: Ring
+Description: Golden, for a big person. Pickable=true
+Location: Picture
+
+Location: Main Room
+Description: A king size bed and a lot of dirty clothes.
+Connections: south=Hallway
+Entities: Bed,Table
+Bed: King size bed with a red blanket.
+Table: Small night table next to the bed. Container=true
+Entity: Notebook
+Description: Small, almost fully used. Pickable=true
+Location: Table

@@ -36,7 +36,7 @@ public:
         commandMap["go"] = std::make_unique<GoCommand>();
         commandMap["lookat"] = std::make_unique<LookAtCommand>();
         commandMap["lookin"] = std::make_unique<LookInCommand>();
-		commandMap["putin"] = std::make_unique<PutInCommand>();
+		commandMap["put"] = std::make_unique<PutInCommand>();
 		commandMap["take"] = std::make_unique<TakeCommand>();
         commandMap["open inventory"] = std::make_unique<OpenInventoryCommand>();
         commandMap["debug tree"] = std::make_unique<Debug_Tree>();

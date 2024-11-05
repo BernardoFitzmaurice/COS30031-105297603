@@ -19,8 +19,10 @@ public:
     std::string getName() const;
     std::string getDescription() const;
 	bool canContainEntities() const;
-	void addEntity(const Entity& entity);
-	bool removeEntity(const std::string& entityName);
+
+    // Managing contained entities
+    void addNestedEntity(const Entity& entity);
+    bool removeNestedEntity(const std::string& entityName);
 	void displayContents() const;
 };
 

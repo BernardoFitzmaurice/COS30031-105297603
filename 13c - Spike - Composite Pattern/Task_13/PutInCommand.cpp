@@ -8,31 +8,39 @@ void PutInCommand::execute(const std::string& input, Player& player,
     Inventory& inventory) {
 
     std::istringstream iss(input);
-    std::string command, entityName, containerName, word;
-	iss >> command >> entityName >> word >> containerName;
+    std::string command, entityName, preposition, containerName;
+    iss >> command >> entityName >> preposition >> containerName;
 
-	auto& entities = locationEntities[player.currentLocation];
+    // Check for "put <entity> in <container>"
+    if (command != "put" || preposition != "in") {
+        std::cout << "Invalid format. Use: put <entity> in <container>\n";
+        return;
+    }
+
+    // Locate entity and container in current location
+    auto& entities = locationEntities[player.currentLocation];
     Entity* entity = nullptr;
-	Entity* container = nullptr;
+    Entity* container = nullptr;
 
     for (auto& e : entities) {
         if (e.getName() == entityName) {
-			entity = &e;
+            entity = &e;
         }
         else if (e.getName() == containerName && e.canContainEntities()) {
-			container = &e;
+            container = &e;
         }
     }
+
     if (!entity) {
-        std::cout << entityName << " is not found here.\n";
+        std::cout << "Entity '" << entityName << "' is not found here.\n";
         return;
     }
 
     if (!container) {
-        std::cout << containerName << " is not a container or is not found here.\n";
+        std::cout << "Container '" << containerName << "' is not found here or is not a container.\n";
         return;
     }
 
-    container->addEntity(*entity);
+    container->addNestedEntity(*entity);
     std::cout << "Placed " << entityName << " inside " << containerName << ".\n";
 }

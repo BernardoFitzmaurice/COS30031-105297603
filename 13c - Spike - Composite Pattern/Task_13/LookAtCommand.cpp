@@ -7,8 +7,16 @@ void LookAtCommand::execute(const std::string& input, Player& player,
 	Inventory& inventory) {
 
 	std::string entityName = input.substr(7);
+
 	const auto& locEntities = locationEntities[player.currentLocation];
 	bool found = false;
+
+	// Debug output to verify entity lookup
+	std::cout << "Looking at entity: " << entityName << std::endl;
+	std::cout << "Entities in location:" << std::endl;
+	for (const auto& entity : locEntities) {
+		std::cout << "- " << entity.getName() << std::endl; // List all entities
+	}
 
 	for (const auto& entity : locEntities) {
 		if (entity.getName() == entityName) {

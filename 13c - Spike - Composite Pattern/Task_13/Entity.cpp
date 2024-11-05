@@ -15,14 +15,19 @@ bool Entity::canContainEntities() const {
 	return isContainer;
 }
 
-void Entity::addEntity(const Entity& entity) {
-	if (isContainer) {
-		containedEntities.push_back(entity);
-		std::cout << entity.getName() << "added to " << name << '\n';
-	}
+// Method to add an entity to the container
+void Entity::addNestedEntity(const Entity& entity) {
+    if (isContainer) {
+        containedEntities.push_back(entity);
+        std::cout << entity.getName() << " added to " << name << "\n";
+    }
+    else {
+        std::cout << name << " is not a container and cannot hold entities.\n";
+    }
 }
 
-bool Entity::removeEntity(const std::string& entityName) {
+// Method to remove an entity from the container by name
+bool Entity::removeNestedEntity(const std::string& entityName) {
     for (auto it = containedEntities.begin(); it != containedEntities.end(); ++it) {
         if (it->getName() == entityName) {
             containedEntities.erase(it);
@@ -32,12 +37,11 @@ bool Entity::removeEntity(const std::string& entityName) {
     }
     return false;
 }
-
 void Entity::displayContents() const {
     if (!containedEntities.empty()) {
         std::cout << name << " contains:\n";
         for (const auto& entity : containedEntities) {
-            std::cout << "- " << entity.getName() << "\n";
+            std::cout << "- " << entity.getName() << ": " << entity.getDescription() << "\n";
         }
     }
     else {

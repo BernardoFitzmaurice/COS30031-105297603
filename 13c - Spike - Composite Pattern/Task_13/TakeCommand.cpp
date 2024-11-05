@@ -26,7 +26,7 @@ void TakeCommand::execute(const std::string& input, Player& player,
         return;
     }
 
-    entity = container->removeEntity(entityName) ? new Entity(entityName, "") : nullptr;
+    entity = container->removeNestedEntity(entityName) ? new Entity(entityName, "") : nullptr;
     if (entity) {
         std::cout << "Took " << entityName << " from " << containerName << ".\n";
         entities.push_back(*entity); // Place the entity back in the location

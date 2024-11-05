@@ -32,8 +32,8 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    map<string, Location> gameWorld; // A graph to store the game locations
-    map<string, vector<Entity>> locationEntities; // Entities in each location
+    map<string, Location> gameWorld;  // A graph to store the game locations
+    map<string, vector<Entity>> locationEntities;  // Entities in each location
     string line, locationName, description, connections;
 
     while (getline(inputFile, line)) {
@@ -41,17 +41,38 @@ int main(int argc, char* argv[]) {
             Location loc;
 
             // Extract location name
-            locationName = line.substr(line.find(":") + 2);
-            loc.name = locationName;  // Keep the original case
+            size_t colonPos = line.find(":");
+            if (colonPos != string::npos) {
+                locationName = line.substr(colonPos + 2);
+                loc.name = locationName;  // Keep the original case
+            }
+            else {
+                cout << "Error: Missing ':' in line: " << line << endl;
+                continue;  // Skip this line
+            }
 
             // Read the description
             getline(inputFile, line);
-            description = line.substr(line.find(":") + 2);
-            loc.description = description;
+            colonPos = line.find(":");
+            if (colonPos != string::npos) {
+                description = line.substr(colonPos + 2);
+                loc.description = description;
+            }
+            else {
+                cout << "Error: Missing ':' in line: " << line << endl;
+                continue;
+            }
 
             // Read the connections
             getline(inputFile, line);
-            connections = line.substr(line.find(":") + 2);
+            colonPos = line.find(":");
+            if (colonPos != string::npos) {
+                connections = line.substr(colonPos + 2);
+            }
+            else {
+                cout << "Error: Missing ':' in line: " << line << endl;
+                continue;
+            }
 
             // Analyze the connections
             stringstream ss(connections);
@@ -59,56 +80,102 @@ int main(int argc, char* argv[]) {
 
             while (getline(ss, connection, ',')) {
                 size_t equalPos = connection.find("=");
-                string direction = connection.substr(0, equalPos);
-                string destLocation = connection.substr(equalPos + 1);
+                if (equalPos != string::npos) {
+                    string direction = connection.substr(0, equalPos);
+                    string destLocation = connection.substr(equalPos + 1);
 
-                // Remove extra spaces
-                direction.erase(direction.find_last_not_of(' ') + 1);
-                destLocation.erase(0, destLocation.find_first_not_of(' '));
+                    // Remove extra spaces
+                    direction.erase(direction.find_last_not_of(' ') + 1);
+                    destLocation.erase(0, destLocation.find_first_not_of(' '));
 
-                direction = lowercase(direction); // Convert to lowercase
+                    direction = lowercase(direction);  // Convert to lowercase
 
-                // Store the connection
-                loc.addConnection(direction, destLocation);
-                cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n'; //Debug
+                    // Store the connection
+                    loc.addConnection(direction, destLocation);
+                    cout << "Loading " << locationName << " direction: " << direction << " -> " << destLocation << '\n';  // Debug
+                }
+                else {
+                    cout << "Error: Missing '=' in connection: " << connection << endl;
+                }
             }
 
             // Add the location to the game
             gameWorld[loc.name] = loc;
         }
         else if (line.find("Entities") != string::npos) {
-            string entityNames = line.substr(line.find(":") + 2);
-            vector<string> entities;
-            stringstream ss(entityNames);
-            string entityName;
+            size_t colonPos = line.find(":");
+            if (colonPos != string::npos) {
+                string entityNames = line.substr(colonPos + 2);
+                vector<string> entities;
+                stringstream ss(entityNames);
+                string entityName;
 
-            while (getline(ss, entityName, ',')) {
-                entities.push_back(entityName);
+                while (getline(ss, entityName, ',')) {
+                    entities.push_back(entityName);
+                }
+
+                for (const string& entityName : entities) {
+                    getline(inputFile, line);
+                    colonPos = line.find(":");
+                    if (colonPos != string::npos) {
+                        string entityDesc = line.substr(colonPos + 2);
+
+                        // Check if this entity is marked as a container
+                        bool isContainer = (entityDesc.find("Container=true") != string::npos);
+
+                        // Create the entity with container status and add it to location entities
+                        Entity newEntity(entityName, entityDesc, isContainer);
+                        locationEntities[locationName].push_back(newEntity);
+                    }
+                    else {
+                        cout << "Error: Missing ':' in entity description line: " << line << endl;
+                    }
+                }
             }
-
-            for (const string& entityName : entities) {
-                getline(inputFile, line);
-                string entityDesc = line.substr(line.find(":") + 2);
-                locationEntities[locationName].push_back(Entity(entityName, entityDesc));
+            else {
+                cout << "Error: Missing ':' in Entities line: " << line << endl;
             }
         }
+        // Handling standalone Entity entries to place them within specified containers
+        else if (line.find("Entity:") != string::npos) {
+            // Extract entity name
+            string entityName = line.substr(line.find(":") + 2);
+
+            // Extract the description line
+            getline(inputFile, line);
+            string entityDesc = line.substr(line.find(":") + 2);
+
+            // Extract location/container line
+            getline(inputFile, line);
+            string containerName = line.substr(line.find(":") + 2);
+
+            // Create the entity and add to its container
+            Entity nestedEntity(entityName, entityDesc);
+
+            // Search for the container in the locationEntities map
+            auto& entitiesInLocation = locationEntities[locationName];
+            auto containerIt = std::find_if(entitiesInLocation.begin(), entitiesInLocation.end(),
+                [&containerName](const Entity& e) { return e.getName() == containerName && e.canContainEntities(); });
+
+            if (containerIt != entitiesInLocation.end()) {
+                containerIt->addNestedEntity(nestedEntity);  // Add entity to container
+            }
+            else {
+                cout << "Error: Container not found for entity " << entityName << " in location " << locationName << endl;
+            }
+        }
+
     }
 
     inputFile.close();
 
-    Player player("Kitchen"); // Starting location, no lowercase conversion
+    Player player("Kitchen");  // Starting location, no lowercase conversion
     Inventory playerInventory;
     CMD_Manager commandManager;
 
     string input;
 
     while (true) {
-        // Check if the player's location exists in the game world
-        if (gameWorld.find(player.currentLocation) == gameWorld.end()) {
-            cout << "Error: Current location '" << player.currentLocation << "' not found in the game world.\n";
-            break;
-        }
-
         // Show location details
         Location& loc = gameWorld[player.currentLocation];
         cout << "\nThe location you're in is: " << loc.name << endl;
@@ -128,10 +195,9 @@ int main(int argc, char* argv[]) {
         getline(cin, input);
 
         if (input == "quit") {
-            cout << "Weak" << endl;
+            cout << "Exiting the game." << endl;
             break;
         }
-
         // Pass input to command manager
         commandManager.execute(input, player, gameWorld, locationEntities, playerInventory);
     }

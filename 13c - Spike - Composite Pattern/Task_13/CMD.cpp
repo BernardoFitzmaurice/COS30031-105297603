@@ -24,6 +24,14 @@ void CMD::executeCommand(const std::string& input, Player& player,
         }
     }
     std::cout << "Invalid command." << std::endl;
+
+    for (const auto& pair : commandMap) {
+        const std::string& key = pair.first;
+        if (resolvedInput.rfind(key, 0) == 0) {  // Check if command starts with key
+            pair.second->execute(resolvedInput, player, gameWorld, locationEntities, inventory);
+            return;
+        }
+    }
 }
 
 void CMD::addAlias(const std::string& alias, const std::string& command) {
